@@ -86,13 +86,12 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
             user_permission_status_dict[user] = False
             continue
 
-       try:
+        try:
             user_permissions = set(
                 permission["name"]
                 for role in config["get_roles"](user)
                 for permission in role["permissions"]
             )
-
        except TypeError:
             user_permission_status_dict[user] = False
             continue
