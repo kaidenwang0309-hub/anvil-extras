@@ -76,7 +76,7 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
         required_permissions = set(permissions)
 
     table_rows = getattr(app_tables, table_name).search()
-    
+
     users = [row[user_column]
         for row in table_rows
         if roles.issubset(set(row["roles"])
