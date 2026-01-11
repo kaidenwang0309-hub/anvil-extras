@@ -79,8 +79,7 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
 
     users = [row[user_column]
         for row in table_rows
-        if roles.issubset(set(row["roles"])
-    ]
+        if roles.issubset(set(row["roles"]))]
 
     for user in users:
         if user is None:
