@@ -78,31 +78,31 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
 
     table_rows = getattr(app_tables, table_name).search()
     users = (
-        row[user_column] 
+        row[user_column]
         for row in table_rows
         if roles.issubset(set(row["roles"])
     )
-    
+
     for user in users:
         if user is None:
             user_permission_status_dict[user] = False
             continue
- 
+
        try:
             user_permissions = set(
                 permission["name"]
                 for role in config["get_roles"](user)
                 for permission in role["permissions"]
             )
-       
+
        except TypeError:
             user_permission_status_dict[user] = False
             continue
-    
+
         user_permission_status_dict[user] = required_permissions.issubset(user_permissions)
 
     return user_permission_status_dict
-             
+
 def check_permissions(permissions):
     """Checks a users permissions, raises ValueError if user does not have permissions"""
     if has_permission(permissions):
