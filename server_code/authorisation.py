@@ -46,9 +46,12 @@ def authentication_required(func):
     return wrapper
 
 
-def has_permission(permissions):
+sentinel = object()
+def has_permission(permissions, user=sentinel):
     """Returns True/False depending on whether a user has permission or not"""
-    user = anvil.users.get_user()
+    if user = sentinel:
+        user = anvil.users.get_user()
+        
     if user is None:
         return False
 
@@ -69,37 +72,11 @@ def has_permission(permissions):
     return required_permissions.issubset(user_permissions)
 
 
-def each_has_permission(permissions, roles, table_name, user_column="username"):
+def each_has_permission(permissions, users):
     user_permission_status_dict = {}
-    if isinstance(permissions, str):
-        required_permissions = set([permissions])
-    else:
-        required_permissions = set(permissions)
-
-    table_rows = getattr(app_tables, table_name).search()
-
-    users = [
-        row[user_column] for row in table_rows if roles.issubset(set(row["roles"]))
-    ]
 
     for user in users:
-        if user is None:
-            user_permission_status_dict[user] = False
-            continue
-
-        try:
-            user_permissions = set(
-                permission["name"]
-                for role in config["get_roles"](user)
-                for permission in role["permissions"]
-            )
-        except TypeError:
-            user_permission_status_dict[user] = False
-            continue
-
-        user_permission_status_dict[user] = required_permissions.issubset(
-            user_permissions
-        )
+        user_permission_status_dict[user] = has_permission(permissions, user=user)
 
     return user_permission_status_dict
 
