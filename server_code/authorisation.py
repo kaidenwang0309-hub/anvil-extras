@@ -92,10 +92,10 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
                 for role in config["get_roles"](user)
                 for permission in role["permissions"]
             )
-       except TypeError:
+        except TypeError:
             user_permission_status_dict[user] = False
             continue
-
+        
         user_permission_status_dict[user] = required_permissions.issubset(user_permissions)
 
     return user_permission_status_dict
