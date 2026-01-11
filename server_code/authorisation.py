@@ -68,7 +68,6 @@ def has_permission(permissions):
 
     return required_permissions.issubset(user_permissions)
 
-
 def each_has_permission(permissions, roles, table_name, user_column="username"):
     user_permission_status_dict = {}
     if isinstance(permissions, str):
@@ -77,11 +76,11 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
         required_permissions = set(permissions)
 
     table_rows = getattr(app_tables, table_name).search()
-    users = (
-        row[user_column]
+    
+    users = [row[user_column]
         for row in table_rows
         if roles.issubset(set(row["roles"])
-    )
+    ]
 
     for user in users:
         if user is None:
@@ -102,6 +101,7 @@ def each_has_permission(permissions, roles, table_name, user_column="username"):
         user_permission_status_dict[user] = required_permissions.issubset(user_permissions)
 
     return user_permission_status_dict
+
 
 def check_permissions(permissions):
     """Checks a users permissions, raises ValueError if user does not have permissions"""
