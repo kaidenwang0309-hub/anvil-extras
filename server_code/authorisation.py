@@ -49,7 +49,7 @@ def authentication_required(func):
 sentinel = object()
 def has_permission(permissions, user=sentinel):
     """Returns True/False depending on whether a user has permission or not"""
-    if user = sentinel:
+    if user == sentinel:
         user = anvil.users.get_user()
 
     if user is None:
