@@ -74,8 +74,7 @@ def has_permission(permissions, user=sentinel):
 
 def check_permissions(permissions, user=sentinel):
     """Checks a users permissions, raises ValueError if user does not have permissions"""
-    if user is sentinel:
-        user = anvil.users.get_user()
+    user = anvil.users.get_user() if user is sentinel else None
 
     if has_permission(permissions, user=user):
         return
