@@ -126,8 +126,8 @@ def _get_jquery_for_component(component):
         return _S(_js.get_dom_node(component)).find("form")
     elif isinstance(component, (_anvil.CheckBox, _anvil.RadioButton)):
         return _S(_js.get_dom_node(component)).find("input")
-    else:
-        return _S(_js.get_dom_node(component))
+
+    return _S(_js.get_dom_node(component))
 
 
 def _noop(**e):
