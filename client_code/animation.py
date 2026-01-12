@@ -78,7 +78,7 @@ class Transition(dict):
         t_len = None
         for key, val in transitions.items():
             assert (
-                type(val) is list or type(val) is tuple
+                isinstance(val, (list, tuple))
             ), "all transitions must be lists"
             if key not in _transforms:
                 continue
@@ -123,8 +123,8 @@ class Transition(dict):
             return other
         elif isinstance(other, dict):
             return Transition(**other)
-        else:
-            return NotImplemented
+
+        return NotImplemented
 
     def __or__(self, other):
         other = self._check_other(other)
@@ -153,9 +153,7 @@ class Transition(dict):
         return other.__or__(self)
 
     def __reversed__(self):
-        reverse = {}
-        for key, val in self.items():
-            reverse[key] = list(reversed(val))
+        reverse = {key: list(reversed(val)) for key, val in self.items()}
         return self._create(reverse, self._t_keys, self._t_len)
 
     @classmethod
