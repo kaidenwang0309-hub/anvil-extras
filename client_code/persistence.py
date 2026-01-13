@@ -50,14 +50,9 @@ class LinkedAttribute:
     def __get__(self, instance, objtype=None):
         if instance is None:
             return self
-
-        if instance._delta:
+        elif instance._delta:
             return instance._delta[self._name]
-
-        if not instance._store:
-            return None
-
-        if not instance._store[self._linked_column]:
+        elif not instance._store.get(self._linked_column):
             return None
 
         return instance._store[self._linked_column][self._linked_attr]
