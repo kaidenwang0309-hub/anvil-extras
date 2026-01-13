@@ -109,7 +109,7 @@ def trigger(self: _Component, event: str):
     if event is a dictionary it should include an 'event' key e.g. {'event': 'keypress', 'which': 13}
     """
     if event == "writeback":
-        return self.raise_event('x-anvil-write-back-<property>')
+        return self.raise_event("x-anvil-write-back-<property>")
     if isinstance(event, dict):
         event = _S.Event(event["event"], event)
     event = "mouseenter mouseleave" if event == "hover" else event

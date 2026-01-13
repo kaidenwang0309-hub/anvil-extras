@@ -77,9 +77,7 @@ class Transition(dict):
         t_keys = set()
         t_len = None
         for key, val in transitions.items():
-            assert (
-                isinstance(val, (list, tuple))
-            ), "all transitions must be lists"
+            assert isinstance(val, (list, tuple)), "all transitions must be lists"
             if key not in _transforms:
                 continue
             t_keys.add(key)

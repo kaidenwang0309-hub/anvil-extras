@@ -54,7 +54,7 @@ def _exclusions(table_name, ignore_columns):
         return ignore_columns[table_name]
     elif isinstance(ignore_columns, str):
         return [ignore_columns]
-    
+
     return []
 
 
